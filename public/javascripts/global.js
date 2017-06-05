@@ -134,8 +134,21 @@ function deleteUser(event) {
 
     event.preventDefault();
 
+    // Retrieve username from link rel attribute
+    var thisUserId = $(this).attr('rel');
+    // Get Index of object based on id value
+    var arrayPosition = userListData.map(function(arrayItem) { return arrayItem._id; }).indexOf(thisUserId);
+    console.log('position is ' +arrayPosition.toString());
+    // Get our User Object
+    var thisUserObject = userListData[arrayPosition];
+
+    //Populate Info Box
+    //$('#userInfoName').text(thisUserObject.fullname);
+
+    console.log(thisUserObject.username);
+
     // Pop up a confirmation dialog
-    var confirmation = confirm('Are you sure you want to delete this user?');
+    var confirmation = confirm('Are you sure you want to delete this user: '+ thisUserObject.username + '?');
 
     // Check and make sure the user confirmed
     if (confirmation === true) {
@@ -152,6 +165,7 @@ function deleteUser(event) {
             else {
                 alert('Error: ' + response.msg);
             }
+
             // Update the table
             populateTable();
 
